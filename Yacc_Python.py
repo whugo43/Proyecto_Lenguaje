@@ -1,34 +1,91 @@
 import ply.yacc as yacc
-import Lex_Python
-tokens= Lex_Python.tokens
-precedence = (
-    ('left','PLUS','MINUS'),
-    ('left','TIME','DIVIDED')
-)
-# lazo while
-def p_loop_while(p):
-    ''' loop_while : WHILE '''
-def lazo_for ():
-    b=1+1
-    print("b")
+from Lex_Python import tokens
 
-
-
-'''def p_error(p):
-    print("Syntax error!")
+file = open('res', 'a')
+file.close
+def p_main(p):
+    """ main : body
+            | body main
+    """
+    print("Correct!")
     file = open('res', 'a')
-    file.write('Syntax error!\n')
+    file.write("Correct!\n")
     file.close()
-'''
-def p_error(p):
-    raise Exception("Syntax error.")
-i=0
-while i<3:
-    print(i)
-    i=1+i
-print(i)
 
-for il in "hugo":
-    print(il)
-hugo= "12.3"
-print(int(12.3))
+def p_body (p):
+    """ body : for
+            | while
+            | if
+            | variables
+            | operation_mathematic
+            | operation_logic
+            | operator_arithmetic
+    """
+
+def p_condicion_FOR (t):
+    """ for : FOR SYMBOL IN RANGE LPAREN NUMBER RPAREN
+                        | FOR SYMBOL IN CORIZ NUMBER COMA NUMBER COMA NUMBER CORDER
+                        | FOR SYMBOL IN RANGE LPAREN NUMBER COMA NUMBER LPAREN
+                        """
+
+def p_condition_while (p):
+    """ while : WHILE operation_logic DOBLE_PUNTO variables"""
+
+def p_condicion_if (p):
+    """if : IF operation_logic  DOBLE_PUNTO variables
+        | IF operation_logic DOBLE_PUNTO  variables ELSE variables
+        | IF operation_logic DOBLE_PUNTO variables ELIF operation_logic DOBLE_PUNTO variables ELSE variables"""
+
+def p_variables (p):
+    """ variables : SYMBOL EQUAL SYMBOL
+    | SYMBOL EQUAL type_number
+    | SYMBOL EQUAL operation_mathematic"""
+
+def p_operation_mathematic (p):
+    """ operation_mathematic : type_number operator_arithmetic type_number
+                              | SYMBOL operator_arithmetic type_number
+
+    """
+
+def p_operation_logic (p):
+    """ operation_logic : SYMBOL operator_logic SYMBOL
+                        | SYMBOL operator_logic type_number
+                        | type_number operator_logic SYMBOL
+                        | type_number operator_logic type_number
+    """
+
+def p_type_number(p):
+    """ type_number : NUMBER
+                     | DECIMAL """
+
+def p_operator_arithmetic(p):
+    """ operator_arithmetic : PLUS
+                 | MINUS
+                 | TIMES
+                 | DIVIDED """
+
+def p_operator_logic(p):
+    """ operator_logic : DOUBLE_EQUAL
+                 | GT
+                 | LT
+                 | GEQT
+                 | LEQT """
+
+def p_booleans(p):
+    """ booleans : TRUE
+                 | FALSE"""
+
+def p_error(p):
+        print ("Syntax error!")
+        file = open ('res', 'a')
+        file.write ('Syntax error!\n')
+        file.close ()
+
+parser=yacc.yacc()
+
+def validate(expr):
+    return parser.parse(expr)
+
+validate(''' a=5
+             b=a
+            while a > b: a=10''')

@@ -11,32 +11,45 @@ tokens = [
 	'NUMBER',
 	'COMILLA_SIMPLE',
 	'COMILLA_DOBLE',
+	'DOBLE_PUNTO',
 	'TEXT',
 	'DECIMAL',
 	'EQUAL',
+	'DOUBLE_EQUAL',
 	'GT',
 	'LT',
 	'GEQT',
 	'LEQT',
+	'COMA',
+	'CORIZ',
+	'CORDER',
 ]
-
+t_CORIZ = r'\['
+t_CORDER = r'\]'
 t_PLUS = r'\+'
+t_COMA = r'\,'
 t_MINUS = r'-'
 t_TIMES = r'\*'
 t_DIVIDED = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
-t_SYMBOL = r'[a-z]\w*'
+#t_SYMBOL = r'[a-z]\w*'
+t_SYMBOL = r'[a-zA-Z_][a-zA-Z0-9_]*'
 t_COMILLA_SIMPLE = r"\'"
 t_COMILLA_DOBLE = r'\"'
+t_DOBLE_PUNTO= r'\:'
 t_TEXT = r"(\'[\w\s\.]*\'|\"[\w\s\.]*\")"
 t_EQUAL = r'\='
+t_DOUBLE_EQUAL = r'\=='
 t_GT = r'>'
 t_LT = r'<'
 t_GEQT = r'>='
 t_LEQT = r'<='
 
+
 reserved_words = {
+	'true':'TRUE',
+	'false':'FALSE',
   'and':"AND",
   'as':"AS",
   'assert':"ASSERT",
@@ -67,10 +80,17 @@ reserved_words = {
   'try'	:	"TRY",
   'while'	:	"WHILE",
   'with'	:	"WITH",
-  'yield'	:	"YIELD"
+  'yield'	:	"YIELD",
+  'range'	:  'RANGE',
 }
 
 tokens = tokens + list(reserved_words.values())
+constants = {
+	'true': 'TRUE',
+	'false': "FALSE",
+	'nil': "NIL",
+	'null': "NULL",
+}
 
 def t_DECIMAL(t):
 	r'\d+\.\d+'
@@ -97,16 +117,39 @@ def t_ID(t):
 	else:
 		t.type = 'SYMBOL'
 	return t
-
+t_ignore = ' \t'
 lexer = lex.lex()
-data = """
-	Hola=4
-	"""
+data =''' a= 5
+             b=a
+            while a > b: a=10'''
+data1= '''hugo=1'''
 
-lexer.input(data)
+def recibirtokens(data):
+	lexer.input(data)
+	l=[]
+	while True:
+		tok = lexer.token()
+		if not tok:
+			break
+		a=""
+		list=tok.__dict__
+		l.append([" value: "+ str(list['value']) + ', type: ' + str(list['type'])])
+		for i in l:
+			a= a+ str(i[0])+ '\n'
 
-while True:
-	tok = lexer.token()
-	if not tok:
-		break
-	print(tok)
+
+	return a
+
+def test(code):
+	lexer.input(code)
+	while True:
+		tok = lexer.token()
+		if not tok:
+			break
+		print(tok)
+test(data)
+
+print(recibirtokens(data))
+"""
+print(recibirtokens(data1))
+"""
