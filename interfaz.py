@@ -3,6 +3,7 @@ import tkinter.messagebox
 from tkinter.ttk import Frame, Label, Entry
 from Lex_Python import recibirtokens
 from Yacc_Python import validate
+import os
 class App(Frame):
     def comparar(self):
         expr = entry1.get ("1.0", 'end')
@@ -109,6 +110,7 @@ class App(Frame):
 
 
 
+
     def errorMsg(self,msg):
         if msg == 'error':
             tkinter.messagebox.showerror('Error!', 'Enter your expression')
@@ -119,8 +121,14 @@ class App(Frame):
             self.errorMsg('error')
         else:
             result = validate(expr)
-            file = open('res', 'r')
-            last_line = file.read().splitlines()[-1]
+            last_line = 'Correct!'
+            file = open ('res.txt', 'r')
+            for linea in file.readlines ():
+                if linea == 'Syntax error!\n':
+                    last_line = 'Syntax error!'
+            file.close ()
+            os.remove ('res.txt')
+
             res.set(last_line)
 
     def validate2(self):
@@ -129,8 +137,14 @@ class App(Frame):
             self.errorMsg('error')
         else:
             result = validate(expr2)
-            file = open('res', 'r')
-            last_line = file.read().splitlines()[-1]
+            last_line = 'Correct!'
+            file = open ('res.txt', 'r')
+            for linea in file.readlines ():
+                if linea == 'Syntax error!\n':
+                    last_line = 'Syntax error!'
+            file.close ()
+            os.remove ('res.txt')
+
             res.set(last_line)
 
 

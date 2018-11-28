@@ -139,7 +139,7 @@ def recibirtokens(data):
 
 
 	return a
-
+"""
 def test(code):
 	lexer.input(code)
 	while True:
@@ -148,8 +148,9 @@ def test(code):
 			break
 		print(tok)
 test(data)
-
-print(recibirtokens(data))
 """
+"""
+print(recibirtokens(data))
+
 print(recibirtokens(data1))
 """
