@@ -48,6 +48,7 @@ t_LEQT = r'<='
 
 
 reserved_words = {
+	'print':'PRINT',
 	'true':'TRUE',
 	'false':'FALSE',
   'and':"AND",
