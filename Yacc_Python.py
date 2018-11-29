@@ -17,9 +17,6 @@ def p_body (p):
             | while
             | if
             | variables
-            | operation_mathematic
-            | operation_logic
-            | operator_arithmetic
     """
 
 def p_condicion_FOR (t):
