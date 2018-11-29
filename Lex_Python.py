@@ -136,21 +136,15 @@ def recibirtokens(data):
 		l.append([" value: "+ str(list['value']) + ', type: ' + str(list['type'])])
 		for i in l:
 			a= a+ str(i[0])+ '\n'
-
-
 	return a
-"""
-def test(code):
-	lexer.input(code)
+def tokens_arbol(data):
+	lexer.input (data)
+	l = []
 	while True:
-		tok = lexer.token()
+		tok = lexer.token ()
 		if not tok:
 			break
-		print(tok)
-test(data)
-"""
-"""
-print(recibirtokens(data))
+		list = tok.__dict__
+		l.append (str (list['type']))
 
-print(recibirtokens(data1))
-"""
+	return l

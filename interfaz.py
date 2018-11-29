@@ -3,6 +3,7 @@ import tkinter.messagebox
 from tkinter.ttk import Frame, Label, Entry
 from Lex_Python import recibirtokens
 from Yacc_Python import validate
+from plagio import plagio
 import os
 class App(Frame):
     def comparar(self):
@@ -11,10 +12,7 @@ class App(Frame):
         if len(expr) == 1 or len(expr2) == 1 :
             self.errorMsg('error')
         else:
-            if expr==expr2:
-                return res.set ("PLAGIO")
-            else:
-                return res.set ("NO PLAGIO")
+            return res.set(plagio(expr,expr2))
     def lexico(self):
 
         expr =entry1.get ("1.0", 'end')
@@ -157,12 +155,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
 

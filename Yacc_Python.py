@@ -96,7 +96,3 @@ parser=yacc.yacc()
 
 def validate(expr):
     return parser.parse(expr)
-
-validate(''' a=5
-             b=a
-            IF a > b: a=10''')
